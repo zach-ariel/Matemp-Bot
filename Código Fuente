@@ -1,0 +1,100 @@
+import machine
+import time
+import onewire
+import ds18x20
+import network
+import urequests
+
+#LEDs
+led_azul = machine.Pin(12, machine.Pin.OUT)
+led_verde = machine.Pin(14, machine.Pin.OUT)
+led_rojo = machine.Pin(27, machine.Pin.OUT)
+
+def leds_parpadeando():    
+    led_azul.on()
+    led_verde.on()
+    led_rojo.on()
+    time.sleep(0.5)
+    led_azul.off()
+    led_verde.off()
+    led_rojo.off()
+    time.sleep(0.5)
+    
+def leds_apagados():
+    led_azul.off()
+    led_verde.off()
+    led_rojo.off()
+# Bot de telegram
+TOKEN = "CODIGO HTTP API DEVUELTO POR TELEGRAM"
+CHAT_ID = "NÚMERO DE CHAT"
+
+def enviar_telegram(mensaje):
+    url = "https://api.telegram.org/CÓDIGO HTTP API/sendMessage".format(TOKEN)
+    try:
+        r = urequests.post(url, json={"chat_id": CHAT_ID, "text": mensaje})
+        r.close()
+    except:
+        print("Error enviando mensaje")
+
+
+# Wifi
+def conectar_wifi():
+    sta_if = network.WLAN(network.WLAN.IF_STA)
+    sta_if.active(True)
+    sta_if.connect("Nombre de la red WIFI", "Contraseña")
+    sta_if.isconnected()
+    sta_if.ipconfig('addr4')
+
+
+# Sensor
+sensor_pin = machine.Pin(23)
+ow = onewire.OneWire(sensor_pin)
+ds = ds18x20.DS18X20(ow)
+roms = ds.scan()
+
+# Boton
+boton = machine.Pin(0, machine.Pin.IN, machine.Pin.PULL_UP)
+
+sensando = False
+
+def handle_boton(pin):
+    global sensando
+    sensando = not sensando  
+    print("Sensando =", sensando)
+    enviar_telegram("Medición en curso" if sensando else "Medición detenida")
+
+boton.irq(trigger=machine.Pin.IRQ_FALLING, handler=handle_boton)
+
+
+# Programa
+conectar_wifi()
+
+print("Listo para sensar. Tocá el botón para iniciar/detener el sensado.")
+
+while True:
+    if sensando:
+        try:
+            ds.convert_temp()
+            time.sleep_ms(750)
+            temp = ds.read_temp(roms[0])
+            print("Temperatura:", temp)
+            leds_apagados()
+            if temp>(0) and temp<=(65):
+                led_azul.on()
+                enviar_telegram("El agua se está calentando")
+                enviar_telegram("Temperatura actual: {:.1f}ºC".format(temp))
+                time.sleep(20)
+            if temp >(65) and temp<(75):
+                led_verde.on()
+                enviar_telegram("Está lista el agua")
+                time.sleep(2)
+            if temp>(75):
+                led_rojo.on()
+                enviar_telegram("Se te pasó el agua")
+                time.sleep(5)
+        except Exception as e:
+            print("Error leyendo:", e)
+            enviar_telegram("Error leyendo el sensor")
+    else:
+        leds_parpadeando()
+    time.sleep(0.5)
