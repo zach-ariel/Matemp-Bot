@@ -7,4 +7,5 @@ El sistema cuenta con un sensor DS18B20 que tomará los valores de temperatura d
 
 En el archivo "Ensamblaje 2" podrá encontrarse una caja contenedora para el dispositivo como se muestra a continuación:
 
-<img width="444" height="334" alt="image" src="https://github.com/user-attachments/assets/5d413cda-2d47-456d-94f7-7dcc04d852c3" />
+<img width="415" height="326" alt="image" src="https://github.com/user-attachments/assets/ae4167ea-6a49-43ac-87d2-6edebf26959a" />
+
