@@ -3,8 +3,7 @@ El presente repositorio surge por la necesidad de medir de forma precisa la temp
 
 El sistema cuenta con un sensor DS18B20 que tomará los valores de temperatura del agua y tres diodos LED para dar alertas visuales de los estados del dispositivo y el agua. Los resultados obtenidos son enviados al usuario a través de la aplicación de mensajería instantánea Telegram. Una representación del mismo puede encontrarse a continuación.
 
-<img height="321" width="970" alt="image" src="https://github.com/user-attachments/assets/c89b15f6-6685-4fca-a836-d3f2e36e1971" />
-
+<img width="972" height="326" alt="image" src="https://github.com/user-attachments/assets/5146f708-98fb-467f-abd4-bba88dca6e64" />
 
 En el archivo "Ensamblaje 2" podrá encontrarse una caja contenedora para el dispositivo como se muestra a continuación:
 
