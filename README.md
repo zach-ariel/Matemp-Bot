@@ -5,7 +5,7 @@ El sistema cuenta con un sensor DS18B20 que tomará los valores de temperatura d
 
 <img width="972" height="326" alt="image" src="https://github.com/user-attachments/assets/5146f708-98fb-467f-abd4-bba88dca6e64" />
 
-En el archivo "Ensamblaje 2" podrá encontrarse una caja contenedora para el dispositivo como se muestra a continuación:
+En el archivo "Caja contenedora Matemp" podrá encontrarse una caja contenedora para el dispositivo, si el mismo se ensambla en una protoboard como se indica en la imagen anterior:
 
 <img width="415" height="326" alt="image" src="https://github.com/user-attachments/assets/ae4167ea-6a49-43ac-87d2-6edebf26959a" />
 
